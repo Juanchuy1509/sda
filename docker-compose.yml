@@ -1,0 +1,30 @@
+version: '3'  # La versión de Docker Compose que estás utilizando
+
+services:
+  web:
+    build: . # La imagen de Docker para tu aplicación web
+    command: python manage.py runserver 0.0.0.0:8000
+
+
+    environment:
+      DJANGO_SETTINGS_MODULE: 'apk09102023.settings'
+    volumes:
+      - .:/app # Monta tu proyecto en el contenedor (asegúrate de ajustar la ruta)
+    ports:
+      - 8000:8000  # Mapea el puerto 5000 del contenedor al puerto 5000 de tu máquina local
+    depends_on:
+      - db  # Indica que este servicio depende del servicio 'db'
+
+  db:
+    image: postgres:13.12-alpine3.18  # La imagen de Docker para PostgreSQL
+    environment:
+      POSTGRES_DB: db1010  # Nombre de la base de datos
+      POSTGRES_USER: postgres  # Nombre de usuario de la base de datos
+      POSTGRES_PASSWORD: admin  # Contraseña de la base de datos
+    ports:
+      - 5432:5432  # Mapea el puerto 5432 del contenedor al puerto 5432 de tu máquina local
+    volumes:
+      - data-db:/data/db
+
+volumes:
+  data-db:
