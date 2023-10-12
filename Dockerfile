@@ -12,8 +12,5 @@ RUN pip install -r requirements.txt
 # Copia los archivos de tu proyecto al directorio de trabajo
 COPY . .
 
-# Apply database migrations
-RUN docker-compose run web python manage.py migrate
-
 # Especifica el comando que se ejecutará cuando se inicie el contenedor
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
